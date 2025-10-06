@@ -4,6 +4,7 @@ import 'package:realneers_reports/presentation/shared/widgets/inputs.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:realneers_reports/features/auth/data/user_profile_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,13 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
       if (!mounted) return;
       final messenger = ScaffoldMessenger.of(context);
       messenger.showSnackBar(
-        const SnackBar(content: Text('Login exitoso')),
+        SnackBar(content: Text(context.tr('auth.login.success'))),
       );
     } on FirebaseAuthException catch (e) {
       if (!mounted) return;
       final messenger = ScaffoldMessenger.of(context);
       messenger.showSnackBar(
-        SnackBar(content: Text(e.message ?? 'Error de autenticación')),
+        SnackBar(content: Text(e.message ?? context.tr('auth.login.error'))),
       );
     } finally {
       if (mounted) setState(() => loading = false);
@@ -51,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Login')),
+      appBar: AppBar(title: Text(context.tr('auth.login.title'))),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -59,20 +60,24 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               EmailInput(controller: emailCtrl),
-              const SizedBox(height: 12),
               PasswordInput(controller: passCtrl),
-              const SizedBox(height: 20),
-              ElevatedButton(
+              const SizedBox(height: 16),
+              FilledButton.icon(
+                icon: Icon(Icons.login_outlined),
                 onPressed: loading ? null : _login,
-                child: loading
-                    ? const SizedBox(height: 16, width: 16, child: CircularProgressIndicator())
-                    : const Text('Ingresar'),
+                label: loading
+                    ? const SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: CircularProgressIndicator(),
+                      )
+                    : Text(context.tr('auth.login.button')),
               ),
               const SizedBox(height: 12),
               TextButton(
                 onPressed: () => context.push('/register'),
-                child: const Text('Crear cuenta'),
-              )
+                child: Text(context.tr('auth.login.create_account')),
+              ),
             ],
           ),
         ),
@@ -107,11 +112,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: passCtrl.text.trim(),
       );
       await cred.user?.updateDisplayName(nameCtrl.text.trim());
-      // Guardar perfil en Firestore
       final uid = cred.user?.uid;
       if (uid != null) {
         try {
-          final service = UserProfileService(firestore: FirebaseFirestore.instance);
+          final service = UserProfileService(
+            firestore: FirebaseFirestore.instance,
+          );
           await service.saveUserProfile(
             uid: uid,
             name: nameCtrl.text,
@@ -123,20 +129,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (!mounted) return;
           final messenger = ScaffoldMessenger.of(context);
           messenger.showSnackBar(
-            const SnackBar(content: Text('No se pudo guardar el perfil en Firestore. Inténtalo nuevamente.')),
+            SnackBar(
+              content: Text(context.tr('auth.register.save_profile_error')),
+            ),
           );
         }
       }
       if (!mounted) return;
       messenger.showSnackBar(
-        const SnackBar(content: Text('Registro exitoso')),
+        SnackBar(content: Text(context.tr('auth.register.success'))),
       );
       navigator.pop();
     } on FirebaseAuthException catch (e) {
       final messenger = ScaffoldMessenger.of(context);
       if (!mounted) return;
       messenger.showSnackBar(
-        SnackBar(content: Text(e.message ?? 'Error en registro')),
+        SnackBar(content: Text(e.message ?? context.tr('auth.register.error'))),
       );
     } finally {
       if (mounted) setState(() => loading = false);
@@ -156,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registro')),
+      appBar: AppBar(title: Text(context.tr('auth.register.title'))),
       body: Form(
         key: _formKey,
         child: Padding(
@@ -165,20 +173,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 NameInput(controller: nameCtrl),
-                const SizedBox(height: 12),
                 EmailInput(controller: emailCtrl),
-                const SizedBox(height: 12),
                 DniInput(controller: dniCtrl),
-                const SizedBox(height: 12),
                 PhoneInput(controller: phoneCtrl),
-                const SizedBox(height: 12),
                 PasswordInput(controller: passCtrl),
-                const SizedBox(height: 20),
-                ElevatedButton(
+                const SizedBox(height: 16),
+
+                FilledButton.icon(
+                  icon: Icon(Icons.account_circle_outlined),
                   onPressed: loading ? null : _register,
-                  child: loading
-                      ? const SizedBox(height: 16, width: 16, child: CircularProgressIndicator())
-                      : const Text('Registrarme'),
+                  label: loading
+                      ? const SizedBox(
+                          height: 16,
+                          width: 16,
+                          child: CircularProgressIndicator(),
+                        )
+                      : Text(context.tr('auth.register.button')),
                 ),
               ],
             ),

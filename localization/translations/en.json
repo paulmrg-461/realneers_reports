@@ -1,0 +1,30 @@
+{
+  "app.title": "Real Neers Reports",
+  "auth.login.title": "Login",
+  "auth.login.button": "Sign in",
+  "auth.login.create_account": "Create account",
+  "auth.login.success": "Login successful",
+  "auth.login.error": "Authentication error",
+
+  "auth.register.title": "Register",
+  "auth.register.button": "Register",
+  "auth.register.success": "Registration successful",
+  "auth.register.error": "Registration error",
+  "auth.register.save_profile_error": "Could not save profile to Firestore. Please try again.",
+
+  "input.name.label": "Name",
+  "input.name.hint": "Your full name",
+  "input.email.label": "Email",
+  "input.email.hint": "user@example.com",
+  "input.dni.label": "ID",
+  "input.dni.hint": "Numbers only",
+  "input.phone.label": "Phone",
+  "input.phone.hint": "e.g. +51987654321",
+  "input.password.label": "Password",
+  "input.password.hint": "Minimum 6 characters",
+  "input.password.error.min_length": "Must be at least 6 characters",
+
+  "custom_dropdown_searcher.search": "Search",
+  "custom_dropdown_searcher.cancel": "Cancel",
+  "custom_dropdown_searcher.accept": "Accept"
+}
