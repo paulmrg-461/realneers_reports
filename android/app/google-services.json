@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189918028915",
+    "project_id": "realneersreports",
+    "storage_bucket": "realneersreports.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189918028915:android:1ac637c21563f834273606",
+        "android_client_info": {
+          "package_name": "pro.devpaul.realneers_reports"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC74VOdQIrXlAahxMX8j3oge8Xz8um6f2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
