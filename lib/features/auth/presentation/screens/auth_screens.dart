@@ -21,18 +21,18 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => loading = true);
     try {
-      final messenger = ScaffoldMessenger.of(context);
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailCtrl.text.trim(),
         password: passCtrl.text.trim(),
       );
       if (!mounted) return;
+      final messenger = ScaffoldMessenger.of(context);
       messenger.showSnackBar(
         const SnackBar(content: Text('Login exitoso')),
       );
     } on FirebaseAuthException catch (e) {
-      final messenger = ScaffoldMessenger.of(context);
       if (!mounted) return;
+      final messenger = ScaffoldMessenger.of(context);
       messenger.showSnackBar(
         SnackBar(content: Text(e.message ?? 'Error de autenticación')),
       );
@@ -110,14 +110,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Guardar perfil en Firestore
       final uid = cred.user?.uid;
       if (uid != null) {
-        final service = UserProfileService(firestore: FirebaseFirestore.instance);
-        await service.saveUserProfile(
-          uid: uid,
-          name: nameCtrl.text,
-          email: emailCtrl.text,
-          dni: dniCtrl.text,
-          phone: phoneCtrl.text,
-        );
+        try {
+          final service = UserProfileService(firestore: FirebaseFirestore.instance);
+          await service.saveUserProfile(
+            uid: uid,
+            name: nameCtrl.text,
+            email: emailCtrl.text,
+            dni: dniCtrl.text,
+            phone: phoneCtrl.text,
+          );
+        } catch (e) {
+          if (!mounted) return;
+          final messenger = ScaffoldMessenger.of(context);
+          messenger.showSnackBar(
+            const SnackBar(content: Text('No se pudo guardar el perfil en Firestore. Inténtalo nuevamente.')),
+          );
+        }
       }
       if (!mounted) return;
       messenger.showSnackBar(
