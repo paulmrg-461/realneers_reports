@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:realneers_reports/features/auth/presentation/screens/auth_screens.dart';
 import 'route_paths.dart';
+import 'package:realneers_reports/features/auth/presentation/screens/auth_screens.dart';
+import 'package:realneers_reports/features/home/presentation/screens/home_screen.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -18,6 +19,11 @@ final GoRouter appRouter = GoRouter(
       path: Routes.register,
       name: 'register',
       builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      path: Routes.home,
+      name: 'home',
+      builder: (context, state) => const HomeScreen(),
     ),
   ],
 );

@@ -26,5 +26,9 @@
 
   "custom_dropdown_searcher.search": "Search",
   "custom_dropdown_searcher.cancel": "Cancel",
-  "custom_dropdown_searcher.accept": "Accept"
+  "custom_dropdown_searcher.accept": "Accept",
+
+  "home.title": "Home",
+  "home.reports": "Reports",
+  "home.profile": "My Profile"
 }
